@@ -46,7 +46,7 @@ class HomeController extends Controller
             //return $request;
             $expediente = SIG005::where('NroExp',$request->input('nro_exp'))
             ->where('NroExpS','A')
-            ->where('NroExpFch','>=','2019-09-02')
+            // ->where('NroExpFch','>=','2019-09-02')
             ->first();
 
             $project = Project::where('id',$request->input('project_id'))
@@ -67,7 +67,7 @@ class HomeController extends Controller
                 return view('home',compact('exp','pro'))->with('successMsg', 'Proyecto no Existe!');
             }
 
-            $postulantes = ProjectHasPostulantes::where('project_id',$project->id)->get();
+            $postulantes = ProjectHasPostulantes::where('project_id',$project->id)->whereNull('deleted_at')->get();
             $pre = SIG005L1::where('NroExp',$request->input('nro_exp'))->first();
             $proexp = ProjectHasExpedientes::where('project_id',$project->id)->first();
 
@@ -89,7 +89,7 @@ class HomeController extends Controller
         //return $request;
 
         $project = Project::where('id',$request->input('project_idv'))->first();
-        $postulantes = ProjectHasPostulantes::where('project_id',$project->id)->get();
+        $postulantes = ProjectHasPostulantes::where('project_id',$project->id)->whereNull('deleted_at')->get();
 
         //return $date=new \DateTime();
         $date = Carbon::now()->format('Ymd H:i:s');
