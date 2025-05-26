@@ -69,7 +69,7 @@ class HomeController extends Controller
 
             $postulantes = ProjectHasPostulantes::where('project_id',$project->id)->whereNull('deleted_at')->get();
             $pre = SIG005L1::where('NroExp',$request->input('nro_exp'))->first();
-            $proexp = ProjectHasExpedientes::where('project_id',$project->id)->first();
+            $proexp = ProjectHasExpedientes::where('project_id',$project->id)->whereNull('deleted_at')->first();
 
             return view('home',compact('exp','pro','project','expediente','postulantes','pre','proexp'));
 
